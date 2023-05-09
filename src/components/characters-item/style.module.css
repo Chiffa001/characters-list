@@ -1,0 +1,14 @@
+.btnContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.textField {
+    margin-bottom: 1rem;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}

@@ -20,7 +20,7 @@ const charactersService = apiSlice.enhanceEndpoints({
         }
       })
     }),
-    getOneCharacter: builder.query<Character, number>({
+    getOneCharacter: builder.query<Character, string>({
       query: (id) => ({
         url: `/people/${id}`,
         params: {

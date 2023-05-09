@@ -1,0 +1,6 @@
+.errorPlate {
+    padding: 20px 10px;
+    background-color: rgb(214, 104, 104);
+    display: flex;
+    flex-flow: row nowrap;
+}

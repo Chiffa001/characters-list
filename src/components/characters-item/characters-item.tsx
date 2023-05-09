@@ -19,7 +19,7 @@ type Props = {
   details?: boolean
 };
 
-const Item: FC<Props> = ({
+export const CharactersItem: FC<Props> = ({
   character: {
     name,
     gender,
@@ -63,37 +63,37 @@ const Item: FC<Props> = ({
             {isEdit && (
                 <div className={styles.column}>
                     <TextField
-                        className={styles.textField}
+                        sx={{ mb: '1rem' }}
                         value={editedName}
                         label="Name"
                         onChange={editFieldHandler(setEditedName)}
                     />
                     <TextField
-                        className={styles.textField}
+                        sx={{ mb: '1rem' }}
                         value={editedGender}
                         label="Gender"
                         onChange={editFieldHandler(setEditedGender)}
                     />
                     <TextField
-                        className={styles.textField}
+                        sx={{ mb: '1rem' }}
                         value={editedMass}
                         label="Mass"
                         onChange={editFieldHandler(setEditedMass)}
                     />
                     <TextField
-                        className={styles.textField}
+                        sx={{ mb: '1rem' }}
                         value={editedEyeColor}
                         label="Eye Color"
                         onChange={editFieldHandler(setEditedEyeColor)}
                     />
                     <TextField
-                        className={styles.textField}
+                        sx={{ mb: '1rem' }}
                         value={editedHairColor}
                         label="Hair Color"
                         onChange={editFieldHandler(setEditedHairColor)}
                     />
                     <TextField
-                        className={styles.textField}
+                        sx={{ mb: '1rem' }}
                         value={editedHeight}
                         label="Height"
                         onChange={editFieldHandler(setEditedHeight)}
@@ -142,7 +142,7 @@ const Item: FC<Props> = ({
   };
 
   return (
-        <Card sx={{ maxWidth: '30vw' }}>
+        <Card>
             {!details
               ? (
                 <CardActionArea onClick={openDetailsInfo}>
@@ -155,5 +155,3 @@ const Item: FC<Props> = ({
         </Card>
   );
 };
-
-export const CharactersItem = React.memo(Item);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useGetCharactersQuery } from '../../services/characters-service';
 import { SearchPanel } from '../search-panel';
 import { Loader } from '../loader';
@@ -7,11 +7,16 @@ import { CharactersItem } from '../characters-item';
 import { useDebounce } from '../../hooks/use-debounce';
 import { Pagination } from '../pagination';
 import { ErrorPlate } from '../error-plate';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTerm } from '../../store/reducers/search-term-slice';
+import { type ApplicationState } from '../../store';
+import { setPage } from '../../store/reducers/page-slice';
 
 export const CharactersList = () => {
-  const [page, setPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState('');
-  const search = useDebounce(searchTerm, 300);
+  const { term } = useSelector((state: ApplicationState) => state.searchTerm);
+  const { page } = useSelector((state: ApplicationState) => state.page);
+  const dispatch = useDispatch();
+  const search = useDebounce(term, 300);
   const { currentData, isFetching, isError } = useGetCharactersQuery({ page, search });
 
   if (isFetching) {
@@ -22,28 +27,32 @@ export const CharactersList = () => {
     return <ErrorPlate />;
   }
 
+  const pageChangeHandler = (newPage: number) => {
+    dispatch(setPage(newPage));
+  };
+
   const searchPanelChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (page !== 1) {
-      setPage(1);
+      pageChangeHandler(1);
     }
 
-    setSearchTerm(event.target.value);
+    dispatch(setTerm(event.target.value));
   };
 
   const characters = currentData?.results.map((character) => (
-        <Grid item xs={12} sm={6} md={4} key={character.url}>
+        <Grid item xs={12} sm={6} key={character.url}>
             <CharactersItem character={character} />
         </Grid>
   ));
 
-  const pageCount = Math.floor((currentData?.count as number) / 10);
+  const pageCount = Math.ceil((currentData?.count as number) / 10);
 
   return (
         <>
             <SearchPanel
-                value={searchTerm}
+                value={term}
                 onChange={searchPanelChangeHandler}
             />
             <Grid container={true} spacing={3} mt="0">
@@ -54,7 +63,7 @@ export const CharactersList = () => {
                     <Pagination
                         count={pageCount}
                         currentPage={page}
-                        onChange={setPage}
+                        onChange={pageChangeHandler}
                     />
                 </Box>
             )}

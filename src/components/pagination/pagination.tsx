@@ -12,5 +12,5 @@ export const Pagination: FC<Props> = ({ currentPage, onChange, count }) => {
     onChange(value);
   };
 
-  return <MuiPagination count={count} page={currentPage} onChange={pageChangeHandler} />;
+  return <MuiPagination size='small' count={count} page={currentPage} onChange={pageChangeHandler} />;
 };
